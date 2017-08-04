@@ -59,7 +59,7 @@ Mientras que esta guía explica el *qué*, *por qué* y *cómo*, me resulta úti
 ### La regla del 1
 ###### [Style [Y001](#style-y001)]
 
-  - Define 1 componente por archivo.
+  - Define 1 componente por archivo, es recomendable que sea menor a 400 líneas de código.
     
     *¿Por qué?*: Un componente por archivo promueve pruebas unitarias más fáciles.
 
@@ -176,7 +176,7 @@ Mientras que esta guía explica el *qué*, *por qué* y *cómo*, me resulta úti
 
   - Nota: Para acortar únicamente, el resto de los ejemplos de esta guía podrían omitir la sintaxis IIFE.
 
-  - Nota: IIFE previente que el código de los tests llegue a sus variables privadas, como expresiones regulares o funciones de ayuda que normalmente vienen bien para hacer pruebas por sí solas. Sin embargo, puedes acceder a ellas creando accesorios o accediendo a través de sus componentes. Por ejemplo, poniendo las funciones de ayuda, expresiones regulares o constantes en su propia factoría.
+  - Nota: IIFE previene que el código de los tests llegue a sus variables privadas, como expresiones regulares o funciones de ayuda que normalmente vienen bien para hacer pruebas por sí solas. Sin embargo, puedes acceder a ellas creando accesorios o accediendo a través de sus componentes. Por ejemplo, poniendo las funciones de ayuda, expresiones regulares o constantes en su propia factoría.
 
 **[Volver arriba](#tabla-de-contenidos)**
 
@@ -627,7 +627,7 @@ Mientras que esta guía explica el *qué*, *por qué* y *cómo*, me resulta úti
 ### Asignando Controladores
 ###### [Style [Y038](#style-y038)]
 
-  - Cuando un controlador debe ser asociado a una vista y cada componente puede ser reutilizado por otros controladores o vistas, define controladores con sus rutas.
+  - Cuando un controlador debe ser asociado a una vista y cada componente puede ser reutilizado por otros controladores o vistas, define los controladores con sus rutas.
 
     Nota: Si una Vista es cargada por otra además de por la ruta, entonces usa la sintaxis `ng-controller="Avengers as vm"`.
 
@@ -1014,7 +1014,7 @@ Mientras que esta guía explica el *qué*, *por qué* y *cómo*, me resulta úti
   }
   ```
 
-    **[Volver arriba](#tabla-de-contenidos)**
+**[Volver arriba](#tabla-de-contenidos)**
 
 ## Directivas
 ### Limitadas a 1 Por Archivo
@@ -1220,7 +1220,7 @@ Mientras que esta guía explica el *qué*, *por qué* y *cómo*, me resulta úti
           link: linkFunc,
           controller: ExampleController,
             controllerAs: 'vm',
-            bindToController: true // porque el scope is aislado
+            bindToController: true // porque el scope es aislado
         };
 
       return directive;
@@ -2711,7 +2711,7 @@ Usa Plantillas o snippets para ayudarte a seguir estilos consistentes o patrones
 ### WebStorm
 ###### [Style [Y252](#style-y252)]
 
-  - Snippets y arhivos de Angular que siguen estos estilos y directrices. Puedes importarlos en tus configuraciones de WebStorm:
+  - Snippets y archivos de Angular que siguen estos estilos y directrices. Puedes importarlos en tus configuraciones de WebStorm:
 
     - Descarga los [snippets y plantillas de Angular para WebStorm](assets/webstorm-angular-file-template.settings.jar?raw=true)
     - Abre WebStorm y ve al menú `File`

@@ -22,7 +22,8 @@ Many of my styles have been from the many pair programming sessions [Ward Bell](
 ## See the Styles in a Sample App
 While this guide explains the *what*, *why* and *how*, I find it helpful to see them in practice. This guide is accompanied by a sample application that follows these styles and patterns. You can find the [sample application (named modular) here](https://github.com/johnpapa/ng-demos) in the `modular` folder. Feel free to grab it, clone it, or fork it. [Instructions on running it are in its readme](https://github.com/johnpapa/ng-demos/tree/master/modular).
 
-##Translations
+## Translations
+
 [Translations of this Angular style guide](https://github.com/johnpapa/angular-styleguide/tree/master/a1/i18n) are maintained by the community and can be found here.
 
 ## Table of Contents
@@ -1235,7 +1236,7 @@ While this guide explains the *what*, *why* and *how*, I find it helpful to see 
 ### Directives and ControllerAs
 ###### [Style [Y075](#style-y075)]
 
-  - Use `controller as` syntax with a directive to be consistent with using `controller as` with view and controller pairings.
+  - Use `controllerAs` syntax with a directive to be consistent with using `controller as` with view and controller pairings.
 
     *Why?*: It makes sense and it's not difficult.
 
@@ -1244,6 +1245,8 @@ While this guide explains the *what*, *why* and *how*, I find it helpful to see 
     Note: Regarding dependency injection, see [Manually Identify Dependencies](#manual-annotating-for-dependency-injection).
 
     Note: Note that the directive's controller is outside the directive's closure. This style eliminates issues where the injection gets created as unreachable code after a `return`.
+    
+    Note: Life-style hooks were introduced in Angular 1.5. Initialization logic that relies on bindings being present should be put in the controller's $onInit() method, which is guarranteed to always be called after the bindings have been assigned.
 
   ```html
   <div my-example max="77"></div>
@@ -1284,13 +1287,23 @@ While this guide explains the *what*, *why* and *how*, I find it helpful to see 
   function ExampleController($scope) {
       // Injecting $scope just for comparison
       var vm = this;
-
       vm.min = 3;
-
+      vm.$onInit = onInit;
+      
+      //////////
+      
       console.log('CTRL: $scope.vm.min = %s', $scope.vm.min);
-      console.log('CTRL: $scope.vm.max = %s', $scope.vm.max);
+      console.log('CTRL: $scope.vm.max = %s', $scope.vm.max); // undefined in Angular 1.5+
       console.log('CTRL: vm.min = %s', vm.min);
-      console.log('CTRL: vm.max = %s', vm.max);
+      console.log('CTRL: vm.max = %s', vm.max); // undefined in Angular 1.5+
+      
+      // Angular 1.5+ does not bind attributes until calling $onInit();
+      function onInit() {
+          console.log('CTRL-onInit: $scope.vm.min = %s', $scope.vm.min);
+          console.log('CTRL-onInit: $scope.vm.max = %s', $scope.vm.max);
+          console.log('CTRL-onInit: vm.min = %s', vm.min);
+          console.log('CTRL-onInit: vm.max = %s', vm.max);
+      }
   }
   ```
 
@@ -1348,8 +1361,12 @@ While this guide explains the *what*, *why* and *how*, I find it helpful to see 
   function ExampleController() {
       var vm = this;
       vm.min = 3;
-      console.log('CTRL: vm.min = %s', vm.min);
-      console.log('CTRL: vm.max = %s', vm.max);
+      vm.$onInit = onInit;
+      
+      function onInit() = {
+          console.log('CTRL: vm.min = %s', vm.min);
+          console.log('CTRL: vm.max = %s', vm.max);
+      }
   }
   ```
 
@@ -2135,7 +2152,7 @@ While this guide explains the *what*, *why* and *how*, I find it helpful to see 
 ### Directive Component Names
 ###### [Style [Y126](#style-y126)]
 
-  - Use consistent names for all directives using camel-case. Use a short prefix to describe the area that the directives belong (some example are company prefix or project prefix).
+  - Use consistent names for all directives using camelCase. Use a short prefix to describe the area that the directives belong (some example are company prefix or project prefix).
 
     *Why?*: Provides a consistent way to quickly identify and reference components.
 
